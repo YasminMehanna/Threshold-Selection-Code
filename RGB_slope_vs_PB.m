@@ -8,7 +8,6 @@ Image = {'cycle_0.jpg','cycle_1.jpg','cycle_2.jpg','cycle_3.jpg','cycle_4.jpg','
 
 %Initial parameters
 slope_black_old = 0;
-p1=0;
 x = [0:1:10];
 
 %1st loop - calculates Avg-RGB values for all images
@@ -36,7 +35,7 @@ for Threshold=20:1:100
     I = imread(Image{j});
     red = I(:,:,1); green = I(:,:,2); blue = I(:,:,3);
 
-    out = red > p1 & red < Threshold | green > p1 & green < Threshold | blue > p1 & blue < Threshold;
+    out = red < Threshold | green < Threshold | blue < Threshold;
     out2=bwmorph(out,'dilate',1);
     
     %Calculate the percentage of black pixels
@@ -68,7 +67,7 @@ for j=1:length(Image)
     I = imread(Image{j});
     red = I(:,:,1); green = I(:,:,2); blue = I(:,:,3);
 
-    out = red > p1 & red < p2_final | green > p1 & green < p2_final | blue > p1 & blue < Threshold_final;
+    out = red < Threshold_final | green < Threshold_final | blue < Threshold_final;
     out2=bwmorph(out,'dilate',1);
     PB(j) = (nnz(~out2) / numel(out2))*100; 
     
